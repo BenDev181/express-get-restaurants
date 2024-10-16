@@ -22,17 +22,20 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
     const restaurant = await Restaurant.create(req.body)
-    res.json(restaurant)
+    let restaurants = await Restaurant.findAll()
+    res.json(restaurants)
 })
 
 router.put("/:id", async (req, res) => {
     const updatedRestaurant = await Restaurant.update(req.body, {where: {id: req.params.id}});
-    res.json(updatedRestaurant)
+    let restaurants = await Restaurant.findAll()
+    res.json(restaurants)
 })
 
 router.delete("/:id", async (req, res) => {
     const deletedRestaurant = await Restaurant.destroy({where: {id: req.params.id}})
-    res.json(deletedRestaurant)
+    let restaurants = await Restaurant.findAll()
+    res.json(restaurants)
 })
 
 module.exports = router;

@@ -44,3 +44,19 @@ test("Test for POST /restaurants", async () => {
         .send({ name: "KFC", location: "New York", cuisine: "Southern" });
     expect(response.body.length).toEqual(restQuantity + 1)
 })
+
+test("Test for PUT /restaurants/:id", async () => {
+    const response = await request(app)
+        .put("/restaurants/1")
+        .send({ name: "KFC", location: "New York", cuisine: "Southern" });
+        const restaurant = await Restaurant.findByPk(1)
+    expect(restaurant.name).toBe("KFC")
+});
+
+test("Test for DELETE /restaurants/:id", async () => {
+    const response = await request(app)
+        .delete("/restaurants/1");
+    const restaurants = await Restaurant.findAll()
+    expect(restaurants.length).toBe(restQuantity)
+    expect(restaurants[0].id).not.toBe(1)
+});
