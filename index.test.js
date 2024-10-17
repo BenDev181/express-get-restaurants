@@ -60,3 +60,18 @@ test("Test for DELETE /restaurants/:id", async () => {
     expect(restaurants.length).toBe(restQuantity)
     expect(restaurants[0].id).not.toBe(1)
 });
+
+test("Test for  validating POST /restaurants", async () => {
+    const response = await request(app)
+        .post("/restaurants")
+        .send();
+    expect(response.statusCode).toEqual(200);
+    const responseData = JSON.parse(response.text);
+    //console.log(responseData)
+    expect(responseData.error[0]).toEqual({
+            type: 'field',       
+            msg: 'Invalid value',
+            path: 'name',        
+            location: 'body'
+    });
+})
